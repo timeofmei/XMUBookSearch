@@ -4,7 +4,7 @@ from parse import searchBook, getBookInfo
 app = Flask(__name__)
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=["POST"])
 def hello_world():
     data = request.get_data()
     json_data = json.loads(data.decode("utf-8"))
