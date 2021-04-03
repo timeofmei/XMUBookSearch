@@ -1,4 +1,4 @@
-import json
+import ujson
 from flask import Flask, request
 from parse import searchBook, getBookInfo
 app = Flask(__name__)
@@ -6,25 +6,26 @@ app = Flask(__name__)
 
 @app.route('/', methods=["POST"])
 def hello_world():
-    data = request.get_data()
-    json_data = json.loads(data.decode("utf-8"))
-    try:
-        bookUrl = json_data.get("bookUrl")
-        return getBookInfo(bookUrl)
-    except:
-        title = json_data.get("title")
-        page = json_data.get("page")
-        publisher = json_data.get("publisher")
-        author = json_data.get("author")
-        isbn = json_data.get("isbn")
-        year = json_data.get("year")
-        doctype = json_data.get("doctype")
-        lang_code = json_data.get("lang_code")
-        sort = json_data.get("sort")
-        orderby = json_data.get("orderby")
-        onlylendable = json_data.get("onlyreadable")
-        return searchBook(title=title, page=page, publisher=publisher, author=author, isbn=isbn, year=year, doctype=doctype, lang_code=lang_code, sort=sort, orderby=orderby, onlylendable=onlylendable)
+        reqData = ujson.loads(request.get_data().decode("utf-8"))
+        print(type(reqData))
+        bookUrl = reqData.get("bookUrl")
+        if bookUrl is not None:
+            return ujson.dumps(getBookInfo(bookUrl), ensure_ascii=False).encode("utf-8")
+        else:
+            title = reqData.get("title")
+            page = reqData.get("page")
+            publisher = reqData.get("publisher")
+            author = reqData.get("author")
+            isbn = reqData.get("isbn")
+            year = reqData.get("year")
+            doctype = reqData.get("doctype")
+            lang_code = reqData.get("lang_code")
+            sort = reqData.get("sort")
+            orderby = reqData.get("orderby")
+            onlylendable = reqData.get("onlyreadable")
+            resData = ujson.dumps(searchBook(title=title, page=page, publisher=publisher, author=author, isbn=isbn, year=year, doctype=doctype, lang_code=lang_code, sort=sort, orderby=orderby, onlylendable=onlylendable), ensure_ascii=False)
+            return resData
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='127.0.0.1', port=8080)
