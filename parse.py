@@ -35,7 +35,7 @@ def searchBook(title, page="1", publisher="", author="", isbn="", year="", docty
         for record in recordList:
             bookDetail = {}
             bookDetail["link"] = bookUrl + record.xpath("./h3/a/@href")[0]
-            bookDetail["name"] = record.xpath("./h3/a//text()")[0]
+            bookDetail["name"] = record.xpath("./h3/a//text()")[0].replace("/", "").strip()
             bookDetail["author"] = getAuthor(record.xpath("./p/text()")[1])
             bookDetail["press"], bookDetail["publishTime"] = getPT(record.xpath("./p/text()")[2], bookDetail["author"])
             bookDetail["copyNum"] = int(record.xpath("./p/span/text()")[0].strip()[-1])
@@ -57,7 +57,7 @@ def getBookInfo(url):
         copies = bookPage.xpath("//*[@class='whitetext']")
     except IndexError:
         return bookInfo
-    bookInfo["name"] = bookPage.xpath("//*[@id='item_detail']/dl[1]/dd/a/text()")[0]
+    bookInfo["name"] = bookPage.xpath("//*[@id='item_detail']/dl[1]/dd/a/text()")[0].replace("/", "").strip()
     bookInfo["author"] = getAuthor(bookPage.xpath("//*[@id = 'item_detail']/dl[1]/dd/text()")[0])
     for copy in copies:
         borrowDetail = {}
