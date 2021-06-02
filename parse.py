@@ -66,6 +66,5 @@ def getBookInfo(url):
         borrowDetail["volume"] = copy.xpath("./td[3]/text()")[0].strip()
         borrowDetail["location"] = copy.xpath("./td[4]/text()")[0].strip()
         borrowDetail["state"] = copy.xpath("./td[5]//text()")[0].strip()
-        borrowDetail["ready"] = borrowDetail["state"] == "可借"
         bookInfo["borrowInfo"].append(borrowDetail)
     return bookInfo
