@@ -56,7 +56,6 @@ class Book:
         self.ls = [book for book in self.ls if book is not None]
         return {"bookNum": self.bookNum, "recordInfo": self.ls}
 
-
     def getBookInfo(self, url):
         borrowInfo = []
         bookResult = httpx.get(url)

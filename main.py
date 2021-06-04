@@ -10,7 +10,7 @@ def hello_world():
         bookUrl = reqData.get("bookUrl")
         if bookUrl is None:
             title = reqData.get("title")
-            page = reqData.get("page") if reqData.get("page") else 1
+            page = reqData.get("page")
             publisher = reqData.get("publisher") if reqData.get("publisher") else ""
             author = reqData.get("author") if reqData.get("author") else ""
             isbn = reqData.get("isbn") if reqData.get("isbn") else ""
