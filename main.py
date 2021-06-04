@@ -9,7 +9,7 @@ def hello_world():
         reqData = ujson.loads(request.get_data().decode("utf-8"))
         bookUrl = reqData.get("bookUrl")
         if bookUrl is None:
-            title = reqData.get("title")
+            title = reqData.get("title") if reqData.get("title") else ""
             page = reqData.get("page")
             publisher = reqData.get("publisher") if reqData.get("publisher") else ""
             author = reqData.get("author") if reqData.get("author") else ""
